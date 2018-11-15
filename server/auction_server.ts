@@ -16,6 +16,30 @@ export class Product {
     }
 }
 
+export class Comment {
+    constructor(
+        public id: number,
+        public productId: number,
+        public timestamp: string,
+        public user: string,
+        public rating: number,
+        public content: string
+    ) { }
+
+}
+
+const comments: Comment[] = [
+    new Comment(1, 1, '2018-10-31 22:22:22', 'zh', 1, '东西不错'),
+    new Comment(1, 1, '2018-10-31 22:22:22', 'zh2', 2, '东西不错'),
+    new Comment(1, 1, '2018-10-31 22:22:22', 'zh', 3, '东西不错'),
+    new Comment(1, 2, '2018-10-31 22:22:22', 'zh2', 4, '东西不错'),
+    new Comment(1, 3, '2018-10-31 22:22:22', 'zh', 5, '东西不错'),
+    new Comment(1, 4, '2018-10-31 22:22:22', 'zh', 1.5, '东西不错'),
+    new Comment(1, 5, '2018-10-31 22:22:22', 'zh2', 2.5, '东西不错'),
+    new Comment(1, 1, '2018-10-31 22:22:22', 'zh', 3, '东西不错'),
+];
+
+
 const products: Product[] = [
     new Product(1, 'title1', 100, 1, 'desc1', ['书']),
     new Product(2, 'title2', 100, 2.5, 'desc2', ['电子产品']),
@@ -34,6 +58,10 @@ app.get('/api/products', (req, res) => {
 
 app.get('/api/products/:id', (req, res) => {
     res.json(products.find((product) => product.id == req.params.id));
+});
+
+app.get('/api/products/:id/comments', (req, res) => {
+    res.json(comments.filter((comment) => comment.productId == req.params.id));
 });
 
 const server = app.listen(8000, 'localhost', () => {
