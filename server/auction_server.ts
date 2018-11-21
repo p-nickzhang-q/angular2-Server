@@ -53,7 +53,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/products', (req, res) => {
-    res.json(products);
+    let result = products;
+    let params = req.query;
+    console.log(params);
+    if (params.title) {
+        result = result.filter((p) => p.title.indexOf(params.title) !== -1);
+    }
+    if (params.price && result.length > 0) {
+        result = result.filter((p) => p.price <= parseInt(params.price));
+    }
+    if (params.category != -1 && result.length > 0) {
+        result = result.filter((p) => p.categories.indexOf(params.category) !== -1);
+    }
+
+    res.json(result);
 });
 
 app.get('/api/products/:id', (req, res) => {
