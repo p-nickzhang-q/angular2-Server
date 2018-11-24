@@ -1,5 +1,6 @@
 import express = require('express');
 import { Server } from 'ws';
+import * as path from 'path';
 
 const app = express();
 
@@ -48,9 +49,7 @@ const products: Product[] = [
     new Product(5, 'title5', 100, 5, 'desc5', ['书'])
 ];
 
-app.get('/', (req, res) => {
-    res.send('hello express!!!');
-});
+app.use('/', express.static(path.join(__dirname, '..', 'client')));
 
 app.get('/api/products', (req, res) => {
     let result = products;
